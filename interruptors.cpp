@@ -13,16 +13,28 @@
 #define c6 p13
 #define c7 p14
 #define c8 p15
+#define lm p16
+#define b1 p17
+#define b2 p18
+#define b3 p19
+#define CLOCK p20
+
 
 //Define outputs
 DigitalOut l1(c1);
-DigitalOut l2(c1);
-DigitalOut l3(c1);
-DigitalOut l4(c1);
-DigitalOut l5(c1);
-DigitalOut l6(c1);
-DigitalOut l7(c1);
-DigitalOut l8(c1);
+DigitalOut l2(c2);
+DigitalOut l3(c3);
+DigitalOut l4(c4);
+DigitalOut l5(c5);
+DigitalOut l6(c6);
+DigitalOut l7(c7);
+DigitalOut l8(c8);
+DigitalOut limit(lm);
+DigitalOut bb1(b1);
+DigitalOut bb2(b2);
+DigitalOut bb3(b3);
+DigitalOut clk(CLOCK);
+
  
 
 
@@ -35,6 +47,8 @@ InterruptIn fir(FIRE);
 //Define counters
 static volatile unsigned int count1;
 static volatile unsigned int countmax;
+static volatile unsigned int chldcount;
+static volatile unsigned int adcount;
 
 
 void updateLEDs(){
@@ -51,7 +65,7 @@ void updateLEDs(){
   switch (count1)
   {
       case 1:
-        l1 =1;
+        l1 = 1;
         break ;
       case 2:
             printf("here\n");
@@ -84,7 +98,10 @@ void updateLEDs(){
 void adult_handler(){
 	
 	if (count1 < countmax)
+	{
 	    count1++;
+	    adcount++;
+	}
 	updateLEDs();
 	//Write your code here
 	
@@ -92,7 +109,11 @@ void adult_handler(){
 
 void child_handler(){
 	if (count1 < countmax - 1)
+	{
+	    chdcount++;
+	    adcount++;
 	    count1 += 2;
+	}
 	updateLEDs();
 	//Write your code here
 	
@@ -127,6 +148,7 @@ int main(){
 	while(1)
 	{
 	    printf("count = %i\n", count1);
-		wait_ms(100);
+		wait_ms(1200);
+		
 	}
 }
