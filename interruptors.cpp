@@ -61,7 +61,6 @@ void handle_barbers()
   int i;
 
   i = 0;
-  printf("child %i ad %i \n", adcount, chldcount);
   if ((!bb1 || !bb2) && adcount && adcount - chldcount > 0)
   {
     if (!bb1)
